@@ -14,6 +14,7 @@ namespace signature_html
     {
         Stream stream;
         FlowLayoutPanel FTL;
+        string readerTemplate;
 
         public HtmlManager(Stream strm, FlowLayoutPanel flowLayoutPanel)
         {
@@ -30,7 +31,7 @@ namespace signature_html
              * para obtener y mostrar por pantalla campos a editar
              */
             StreamReader htmlTemplate = new StreamReader(stream);
-            string readerTemplate = htmlTemplate.ReadToEnd();
+            readerTemplate = htmlTemplate.ReadToEnd();
             MatchCollection matches = Regex.Matches(readerTemplate, @"{([^{}]*)}");
             var results = matches.Cast<Match>().Select(m => m.Groups[1].Value).Distinct().ToList();
             foreach (Match match in matches)
@@ -49,21 +50,32 @@ namespace signature_html
             FTL.Controls.Add(button_tags);
         }
 
+        public void generate_file()
+        {
+        }
 
         public void save_html_fields(object sender, EventArgs e)
         {
+            Stream myStream;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
-            saveFileDialog1.Filter = "html files (*.html)|*.html|All files (*.*)|*.*";
+            saveFileDialog1.Filter = "All files (*.*)|*.*|html files (*.html)|*.html";
             saveFileDialog1.FilterIndex = 2;
             saveFileDialog1.RestoreDirectory = true;
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if ((stream = saveFileDialog1.OpenFile()) != null)
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
                 {
-                    // Code to write the stream goes here.
-                    stream.Close();
+                    StreamWriter streamWriter = new StreamWriter(myStream);
+                    TextBox[] list_textBox = FTL.Controls.OfType<TextBox>().ToArray();
+                    foreach (TextBox item in list_textBox)
+                    {
+                        readerTemplate = readerTemplate.Replace(item.Name, item.Text);
+                    }
+                    streamWriter.WriteLine(readerTemplate);
+                    streamWriter.Flush();
+                    myStream.Close();
                 }
             }
         }
