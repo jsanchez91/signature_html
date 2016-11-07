@@ -28,13 +28,14 @@ namespace signature_html
 
         private void abrirPlantillaToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
+            flowLayoutPanel1.Controls.Clear();
             Stream myStream = null;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-
-            openFileDialog1.InitialDirectory = "c:\\";
+            string initPath = Path.GetTempPath() + @"\FQUL";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
+            openFileDialog1.RestoreDirectory = true;
             openFileDialog1.Filter = "All files (*.*)|*.*|html files (*.html)|*.html";
             openFileDialog1.FilterIndex = 2;
-            openFileDialog1.RestoreDirectory = true;
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -66,6 +67,11 @@ namespace signature_html
         {
             AcercaDe acercaDe = new AcercaDe();
             acercaDe.Show();
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

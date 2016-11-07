@@ -16,5 +16,10 @@ namespace signature_html
         {
             InitializeComponent();
         }
+
+        private void Ayuda_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

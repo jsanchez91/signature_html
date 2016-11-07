@@ -58,10 +58,11 @@ namespace signature_html
         {
             Stream myStream;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
+            string initPath = Path.GetTempPath() + @"\FQUL";
+            saveFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
+            saveFileDialog1.RestoreDirectory = true;
             saveFileDialog1.Filter = "All files (*.*)|*.*|html files (*.html)|*.html";
             saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {

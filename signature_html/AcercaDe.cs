@@ -34,7 +34,7 @@ namespace signature_html
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://frog-zone.com");
+            System.Diagnostics.Process.Start("https://github.com/0rez91/signature_html");
         }
     }
 }
