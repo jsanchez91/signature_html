@@ -56,6 +56,7 @@ namespace signature_html
 
         public void save_html_fields(object sender, EventArgs e)
         {
+            string temporalTemplate = readerTemplate;
             Stream myStream;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             string initPath = Path.GetTempPath() + @"\FQUL";
@@ -72,9 +73,9 @@ namespace signature_html
                     TextBox[] list_textBox = FTL.Controls.OfType<TextBox>().ToArray();
                     foreach (TextBox item in list_textBox)
                     {
-                        readerTemplate = readerTemplate.Replace(item.Name, item.Text);
+                        temporalTemplate = temporalTemplate.Replace(item.Name, item.Text);
                     }
-                    streamWriter.WriteLine(readerTemplate);
+                    streamWriter.WriteLine(temporalTemplate);
                     streamWriter.Flush();
                     myStream.Close();
                 }
